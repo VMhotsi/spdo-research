@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-11-14T06:00:00Z" agent="Mozilla/5.0" version="28.1.2">
+  <diagram id="kafka-cribl-comparison" name="SOC4Kafka vs Cribl Stream">
+    <mxGraphModel dx="1680" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1680" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Kafka ingestion: SOC4Kafka + HF + EP vs Cribl Stream&#10;Cribl replaces the three processing tiers; Splunk indexers and Search Head remain" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=22;fontStyle=1;fontColor=#17365D;" parent="1" vertex="1">
+          <mxGeometry x="60" y="20" width="1560" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-a" value="A — Existing path: SOC4Kafka → HF → EP" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=16;fontStyle=1;fontColor=#17365D;" parent="1" vertex="1">
+          <mxGeometry x="320" y="100" width="900" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-b" value="B — Consolidated path: Cribl Stream replaces SOC4Kafka, HFs, and EP" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=16;fontStyle=1;fontColor=#17365D;" parent="1" vertex="1">
+          <mxGeometry x="320" y="475" width="1100" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="kafka" value="Kafka cluster&#10;Topics / partitions&#10;Broker ACLs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D9EAF7;strokeColor=#4A86B8;fontStyle=1;align=center;verticalAlign=middle;fontSize=14;" parent="1" vertex="1">
+          <mxGeometry x="60" y="355" width="210" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="soc4kafka" value="SOC4Kafka&#10;Kafka receiver&#10;HEC pass-through&#10;No processing in this design" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DDEBF7;strokeColor=#4472C4;fontStyle=1;align=center;verticalAlign=middle;fontSize=13;" parent="1" vertex="1">
+          <mxGeometry x="320" y="150" width="220" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="hf" value="Heavy Forwarders&#10;HEC input&#10;Event breaking / parsing&#10;Routing" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontStyle=1;align=center;verticalAlign=middle;fontSize=13;" parent="1" vertex="1">
+          <mxGeometry x="600" y="150" width="220" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="ep" value="Edge Processor&#10;SPL2 pipeline&#10;Additional transforms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E2F0D9;strokeColor=#70AD47;fontStyle=1;align=center;verticalAlign=middle;fontSize=13;" parent="1" vertex="1">
+          <mxGeometry x="880" y="150" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="cribl" value="Cribl Stream Worker Group&#10;Kafka Source (Pull)&#10;Routes + Pipelines / Functions&#10;Parsing and transformations&#10;Splunk HEC Destination&#10;Managed by Cribl Leader" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E2F0D9;strokeColor=#70AD47;fontStyle=1;align=center;verticalAlign=middle;fontSize=13;" parent="1" vertex="1">
+          <mxGeometry x="320" y="535" width="620" height="155" as="geometry" />
+        </mxCell>
+        <mxCell id="indexers-a" value="Splunk Enterprise 10.x&#10;Indexer cluster&#10;Existing ingest/index tier" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E4DFEC;strokeColor=#8064A2;fontStyle=1;align=center;verticalAlign=middle;fontSize=13;" parent="1" vertex="1">
+          <mxGeometry x="1150" y="150" width="210" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="indexers-b" value="Same Splunk indexer cluster&#10;HEC endpoint(s) / LB&#10;Indexing tier" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E4DFEC;strokeColor=#8064A2;fontStyle=1;align=center;verticalAlign=middle;fontSize=13;" parent="1" vertex="1">
+          <mxGeometry x="1150" y="535" width="210" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="sh-a" value="Search Head&#10;Search-time fields" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE4D6;strokeColor=#C55A11;fontStyle=1;align=center;verticalAlign=middle;fontSize=13;" parent="1" vertex="1">
+          <mxGeometry x="1430" y="150" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="sh-b" value="Same Search Head&#10;Search-time fields" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE4D6;strokeColor=#C55A11;fontStyle=1;align=center;verticalAlign=middle;fontSize=13;" parent="1" vertex="1">
+          <mxGeometry x="1430" y="535" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="kafka-to-soc" value="A: Kafka pull" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;" parent="1" source="kafka" target="soc4kafka" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="295" y="420" />
+              <mxPoint x="295" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="soc-to-hf" value="A: HEC / HTTPS" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;" parent="1" source="soc4kafka" target="hf" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hf-to-ep" value="A: HF S2S target group" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;" parent="1" source="hf" target="ep" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ep-to-indexers" value="A: Enterprise output" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;" parent="1" source="ep" target="indexers-a" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cribl-to-kafka" value="B: Kafka Source pull" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;" parent="1" source="kafka" target="cribl" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="295" y="420" />
+              <mxPoint x="295" y="612" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cribl-to-indexers" value="B: Splunk HEC" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;" parent="1" source="cribl" target="indexers-b" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1050" y="612" />
+              <mxPoint x="1100" y="612" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="indexers-to-sh-a" value="Indexed data / search" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;" parent="1" source="indexers-a" target="sh-a" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="indexers-to-sh-b" value="Indexed data / search" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeWidth=2;fontSize=12;" parent="1" source="indexers-b" target="sh-b" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="change-management" value="INT → PROD: Build and preview Cribl Pipelines with sample data (Simple Preview is capped at 10 MB), validate with an isolated Kafka topic/group and HEC INT index, then promote via Pack/Git or licensed on-prem GitOps. Preview is not a throughput test." style="shape=note;whiteSpace=wrap;html=1;size=18;fillColor=#F5F5F5;strokeColor=#999999;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="60" y="750" width="760" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="limits" value="Large-data / delivery checks: Kafka Source event-breaker support is off; fetch byte limits default to 1 MiB per partition and 10 MiB per response. Tune for actual record sizes. Cribl HEC Destination does not support Splunk indexer acknowledgment; use queues/backpressure and test replay, loss, and duplicates." style="shape=note;whiteSpace=wrap;html=1;size=18;fillColor=#F5F5F5;strokeColor=#999999;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="850" y="750" width="780" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="footer" value="Cribl consolidates source, parsing/routing, and transforms; it does not replace the Splunk indexer cluster or Search Head. Cribl HEC events are cooked/parsed before entering the Splunk indexing segment." style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontColor=#555555;" parent="1" vertex="1">
+          <mxGeometry x="60" y="900" width="1560" height="45" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
